@@ -5,9 +5,13 @@
   "name": "MinimapSync",
   "description": "Synchronization of minimaps",
   "authors": [
-    "Earthcomputer"
+    "Earthcomputer",
+    "CodeW4VE (fork maintenance)"
   ],
-  "contact": {},
+  "contact": {
+    "sources": "https://github.com/CodeW4VE/minimap-sync",
+    "issues": "https://github.com/CodeW4VE/minimap-sync/issues"
+  },
   "license": "MIT",
   "icon": "assets/minimapsync/icon.png",
   "environment": "*",
@@ -17,9 +21,6 @@
     ],
     "main": [
       "net.earthcomputer.minimapsync.MinimapSync"
-    ],
-    "journeymap": [
-      "net.earthcomputer.minimapsync.client.JourneyMapCompat"
     ]
   },
   "mixins": [
@@ -28,7 +29,8 @@
   "accessWidener": "minimapsync.accesswidener",
   "depends": {
     "fabricloader": ">=0.15.0",
-    "fabric": "*",
-    "minecraft": "${mcversion}"
+    "minecraft": "${mcversion}",
+    "fabric-api": "*",
+    "java": ">=21"
   }
 }

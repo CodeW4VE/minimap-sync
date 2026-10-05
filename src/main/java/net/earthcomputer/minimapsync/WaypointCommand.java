@@ -287,7 +287,7 @@ public class WaypointCommand {
             throw NO_WAYPOINTS_EXCEPTION.create();
         }
         source.sendSuccess(() -> MinimapSync.createComponent(source.registryAccess(), """
-            {"text": "=== List of current waypoints ===", "color": "aqua", "bold": "true"}
+            {"text": "=== List of current waypoints ===", "color": "aqua", "bold": true}
         """), false);
         boolean canTeleport = player != null && model.teleportRule().canTeleport(player);
 
@@ -310,7 +310,7 @@ public class WaypointCommand {
                 } else {
                     authorStr = """
                     [
-                        {"text": " by ", "color": "gray", "bold": "true"},
+                        {"text": " by ", "color": "gray", "bold": true},
                         {"text": "%s", "color": "gray"}
                     ]
                 """;
@@ -358,7 +358,7 @@ public class WaypointCommand {
                 source.sendSuccess(() -> MinimapSync.createComponent(source.registryAccess(), """
                     [
                         "- ",
-                        {"text": "%s", "color": "#%06x", "bold": "true"},
+                        {"text": "%s", "color": "#%06x", "bold": true},
                         {"text": ": %d %d %d"}
                         %s%s%s
                     ]
@@ -408,7 +408,7 @@ public class WaypointCommand {
         }
 
         source.sendSuccess(() -> MinimapSync.createComponent(source.registryAccess(), """
-            {"text": "=== List of %d icons ===", "color": "aqua", "bold": "true"}
+            {"text": "=== List of %d icons ===", "color": "aqua", "bold": true}
         """, model.icons().size()), false);
         for (String icon : model.icons().names()) {
             source.sendSuccess(() -> MinimapSync.createComponent(source.registryAccess(), """

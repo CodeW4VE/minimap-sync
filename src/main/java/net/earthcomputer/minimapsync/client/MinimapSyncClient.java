@@ -364,7 +364,7 @@ public class MinimapSyncClient implements ClientModInitializer {
     }
 
     public static void onAddWaypoint(IMinimapCompat source, Waypoint waypoint) {
-        if (source == currentIgnore) {
+        if (source != null && source == currentIgnore) {
             return;
         }
 
@@ -379,7 +379,7 @@ public class MinimapSyncClient implements ClientModInitializer {
     }
 
     public static void onRemoveWaypoint(IMinimapCompat source, String name) {
-        if (source == currentIgnore) {
+        if (source != null && source == currentIgnore) {
             return;
         }
 
@@ -391,7 +391,7 @@ public class MinimapSyncClient implements ClientModInitializer {
     }
 
     public static void onSetWaypointDimensions(IMinimapCompat source, Waypoint waypoint) {
-        if (source == currentIgnore) {
+        if (source != null && source == currentIgnore) {
             return;
         }
 
@@ -403,7 +403,7 @@ public class MinimapSyncClient implements ClientModInitializer {
     }
 
     public static void onSetWaypointPos(IMinimapCompat source, Waypoint waypoint) {
-        if (source == currentIgnore) {
+        if (source != null && source == currentIgnore) {
             return;
         }
 
@@ -415,7 +415,7 @@ public class MinimapSyncClient implements ClientModInitializer {
     }
 
     public static void onSetWaypointColor(IMinimapCompat source, Waypoint waypoint) {
-        if (source == currentIgnore) {
+        if (source != null && source == currentIgnore) {
             return;
         }
 

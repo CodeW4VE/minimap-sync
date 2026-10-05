@@ -58,7 +58,10 @@ public enum XaerosMapCompat implements IMinimapCompat {
     private boolean ready = false;
 
     public XaerosMapCompat init() {
-        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> XaerosMapCompat.INSTANCE.ready = false);
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> client.execute(() -> {
+            XaerosMapCompat.INSTANCE.ready = false;
+            clearIcons();
+        }));
         return this;
     }
 
@@ -78,6 +81,14 @@ public enum XaerosMapCompat implements IMinimapCompat {
         MinimapSyncClient.checkReady();
     }
 
+    private static void clearIcons() {
+        for (String name : iconTextures.keySet()) {
+            Minecraft.getInstance().getTextureManager().release(getIconResourceLocation(name));
+        }
+        iconTextures.clear();
+        symbolToIcon.clear();
+    }
+
     @Override
     public boolean isReady() {
         return ready;
@@ -85,11 +96,7 @@ public enum XaerosMapCompat implements IMinimapCompat {
 
     @Override
     public void initModel(ClientPacketListener listener, Model model) {
-        symbolToIcon.clear();
-        for (DynamicTexture icon : iconTextures.values()) {
-            icon.close();
-        }
-        iconTextures.clear();
+        clearIcons();
 
         Set<MinimapWorld> modifiedWorlds = new HashSet<>();
 
@@ -211,17 +218,13 @@ public enum XaerosMapCompat implements IMinimapCompat {
 
         DynamicTexture texture = new DynamicTexture(image);
         Minecraft.getInstance().getTextureManager().register(getIconResourceLocation(name), texture);
-        DynamicTexture old = iconTextures.put(name, texture);
-        if (old != null) {
-            old.close();
-        }
+        iconTextures.put(name, texture);
     }
 
     @Override
     public void removeIcon(ClientPacketListener handler, String name) {
-        DynamicTexture icon = iconTextures.remove(name);
-        if (icon != null) {
-            icon.close();
+        if (iconTextures.remove(name) != null) {
+            Minecraft.getInstance().getTextureManager().release(getIconResourceLocation(name));
         }
     }
 
@@ -251,8 +254,13 @@ public enum XaerosMapCompat implements IMinimapCompat {
         MinimapWorldManager worldManager = session.getWorldManager();
         MinimapWorldState worldState = session.getWorldState();
         XaeroPath worldPath = worldState.getAutoRootContainerPath()
-            .resolve(session.getDimensionHelper().getDimensionDirectoryName(dimension))
-            .resolve(worldState.getAutoWorldPath());
+            .resolve(session.getDimensionHelper().getDimensionDirectoryName(dimension));
+        // autoWorldPath is already absolute; append only its world node.
+        // This also avoids Xaero 26.5.3's recursive resolve(XaeroPath) overload.
+        XaeroPath autoWorldPath = worldState.getAutoWorldPath();
+        if (autoWorldPath != null) {
+            worldPath = worldPath.resolve(autoWorldPath.getLastNode());
+        }
         return worldManager.getWorld(worldPath);
     }
 
