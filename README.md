@@ -30,6 +30,8 @@ Stop the server, replace the matching jars on the server and clients, and keep t
 
 Version **1.2.3-w4ve.2** adds native Minecraft 26.3 networking and GUI support, updates Xaero and VoxelMap integrations, and fixes icon actions from the shared selector. It also fixes duplicated Xaero world paths so shared waypoints appear in the active map, avoids a recursive path resolver, and releases custom icon textures when disconnecting.
 
+<!-- modrinth:end -->
+
 ## Building
 
 Install JDK 21 for the legacy target and JDK 25 for 26.3. Set `JAVA_HOME_21_X64` and `JAVA_HOME_25_X64` if the JDKs are outside the local default paths.
