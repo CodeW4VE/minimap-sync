@@ -28,6 +28,8 @@ Use `/waypoint` for commands and `/waypoint list` to view the current waypoints.
 
 Stop the server, replace the matching jars on the server and clients, and keep the same world and client configuration. Preserve the world's `minimapsync.json` and `minimapsync_icons/` directory. The saved data format and network protocol remain version 5.
 
+Version **1.2.3-w4ve.3** fixes a crash on startup with Xaero's Minimap 25.2.10 on Minecraft 1.21 / 1.21.1: Xaero moved its icon drawing to new classes, and MinimapSync now hooks into those.
+
 Version **1.2.3-w4ve.2** adds native Minecraft 26.3 networking and GUI support, updates Xaero and VoxelMap integrations, and fixes icon actions from the shared selector. It also fixes duplicated Xaero world paths so shared waypoints appear in the active map, avoids a recursive path resolver, and releases custom icon textures when disconnecting.
 
 <!-- modrinth:end -->
